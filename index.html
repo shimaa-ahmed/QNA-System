@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP QnA + Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333333;
+        }
+        form {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666666;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            background-color: #f9f9f9;
+            border: 1px solid #eeeeee;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: left;
+        }
+        .result p {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NLP QnA + Weather App</h1>
+
+        <form action="/ask" method="post">
+            <label for="question">Ask a Question:</label>
+            <input type="text" id="question" name="question" required>
+            <input type="submit" value="Ask">
+        </form>
+
+        {% if question %}
+            <div class="result">
+                <p><strong>Question:</strong> {{ question }}</p>
+                <p><strong>Answer:</strong> {{ answer }}</p>
+            </div>
+        {% endif %}
+
+        <hr>
+
+        <form action="/weather" method="post">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+            <label for="units">Units:</label>
+            <select id="units" name="units">
+                <option value="metric">Celsius</option>
+                <option value="imperial">Fahrenheit</option>
+            </select>
+            <input type="submit" value="Get Weather">
+        </form>
+
+        {% if location %}
+            <div class="result">
+                <p><strong>Location:</strong> {{ location }}</p>
+                <p><strong>Temperature:</strong> {{ temperature }}°{{ 'C' if units == 'metric' else 'F' }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
